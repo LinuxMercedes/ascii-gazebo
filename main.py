@@ -1,5 +1,5 @@
 from gazebo.game import Game, Room
-import gazebo.commands
+import gazebo.commands as commands
 
 class mygame(Game):
     commands = {
