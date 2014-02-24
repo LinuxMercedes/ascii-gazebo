@@ -9,7 +9,7 @@ class Game:
     done = False
     room = None
     prompt = '> '
-
+    
     def __init__(self):
         pass
 
@@ -43,10 +43,17 @@ class Room:
     """ 
     A Room. Tracks description, adjacent rooms, and contents.
     """
-    def __init__(self, description, nearby, items):
+    def __init__(self, description, nearby, items, npcs):
         self.description = description
         self.nearby = nearby
-        self.items = items
+        self.items = self._make_dict(items)
+        self.npcs = self._make_dict(npcs)
+
+    def _make_dict(self, things):
+        d = {}
+        for thing in things:
+            d[thing.name] = thing
+        return d
 
     def describe(self):
         ret = [self.description]
@@ -60,8 +67,8 @@ class Room:
 
         if len(self.items):
             ret.append(' There is a ')
-        for item in self.items:
-            ret.append(item.name)
+        for item in self.items.keys():
+            ret.append(item)
             ret.append(', ')
         ret[-1] = '. '
 
@@ -71,6 +78,25 @@ class Item:
     """ 
     An item. 
     """
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+class Player:
+    """ 
+    A player
+    """
+
+    inventory = {}
+
+    def __init__(self):
+        pass
+
+class NPC:
+    """
+    An NPC or enemy
+    """
+
     def __init__(self, name, description):
         self.name = name
         self.description = description

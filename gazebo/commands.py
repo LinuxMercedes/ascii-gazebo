@@ -23,9 +23,8 @@ def load(game, filename):
 def look(game, thing):
     if len(thing) > 1:
         thing = thing[1:]
-        for item in game.room.items:
-            if thing == item.name:
-                return item.description
+        if item in game.room.items:
+            return game.room.items[item].description
         else:
             return "Can't look at " + thing
 
@@ -42,10 +41,39 @@ def change_room(game, direction):
     else: 
         return "Can't go that way."
 
+def get(game, item):
+    item = item[1:]
+    if item in game.room.items:
+        i = game.room.items[item]
+        game.player.inventory[i.name] = i
+        del game.room.items[item]
+        return "Got " + i.description
+    else:
+        return "Couldn't get " + item
+
+def inventory(game, item):
+    inventory = game.player.inventory
+
+    if len(item) > 1:
+        if item[1:] in inventory:
+            return "Have got " + inventory[item[1:]].description
+        else:
+            return "Haven't got a " + item[1:]
+    else:
+        if len(inventory):
+            ret = ["Inventory: \n"]
+            for name,item in inventory.items():
+                ret.append(item.description)
+                ret.append(', ')
+            ret[-1] = '. '
+            return ''.join(ret)
+        else:
+            return "You haven't got any items."
+
 def quit(game, thing):
     game.done = True
+    return "Bye!"
 
 def unknown_command(game, command):
-    return "Hey, " + command  + " isn't a command, jackass"
-
+    return "Hey, " + command  + " isn't a command!"
 

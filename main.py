@@ -1,4 +1,4 @@
-from gazebo.game import Game, Room
+from gazebo.game import Game, Room, Item, Player, NPC
 import gazebo.commands as commands
 
 class mygame(Game):
@@ -6,6 +6,8 @@ class mygame(Game):
         'look' : commands.look,
         'quit' : commands.quit,
         'go' : commands.change_room,
+        'get' : commands.get,
+        'inventory' : commands.inventory,
         'lel' : commands.unknown_command,
         'save' : commands.save,
         'load': commands.load,
@@ -18,6 +20,9 @@ class mygame(Game):
                 'north' : 'face',
                 'south' : 'ass',
             },
+            [
+                Item("dong", "A large dong"),
+            ],
             []
         ),
         'face' : Room(
@@ -26,6 +31,7 @@ class mygame(Game):
                 'south' : 'butt',
                 'east' : 'ass',
             },
+            [],
             []
         ),
         'ass' : Room(
@@ -34,11 +40,14 @@ class mygame(Game):
                 'north' : 'butt',
                 'west' : 'face',
             },
+            [],
             []
         ),
     }
 
     room = rooms['butt']
+
+    player = Player()
 
 if __name__=="__main__":
     game = mygame()
