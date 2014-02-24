@@ -1,6 +1,11 @@
 def look(game, thing):
-    if len(thing):
-        return "What item description?"
+    if len(thing) > 1:
+        thing = thing[1:]
+        for item in game.room.items:
+            if thing == item.name:
+                return item.description
+        else:
+            return "Can't look at " + thing
 
     return game.room.describe()
 

@@ -57,10 +57,18 @@ class Room:
 
         if len(self.items):
             ret.append(' There is a ')
-        for key in sorted(self.items.keys()):
-            ret.append(key)
+        for item in self.items:
+            ret.append(item.name)
             ret.append(', ')
         ret[-1] = '. '
 
         return ''.join(ret)
+
+class Item:
+    """ 
+    An item. 
+    """
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
 

@@ -16,7 +16,7 @@ class mygame(Game):
                 'north' : 'face',
                 'south' : 'ass',
             },
-            {}
+            []
         ),
         'face' : Room(
             "Your face.",
@@ -24,7 +24,7 @@ class mygame(Game):
                 'south' : 'butt',
                 'east' : 'ass',
             },
-            {}
+            []
         ),
         'ass' : Room(
             "Your anus.",
@@ -32,7 +32,7 @@ class mygame(Game):
                 'north' : 'butt',
                 'west' : 'face',
             },
-            {}
+            []
         ),
     }
 
