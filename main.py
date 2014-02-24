@@ -7,6 +7,8 @@ class mygame(Game):
         'quit' : commands.quit,
         'go' : commands.change_room,
         'lel' : commands.unknown_command,
+        'save' : commands.save,
+        'load': commands.load,
     }
 
     rooms = {

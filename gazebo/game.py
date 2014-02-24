@@ -10,6 +10,9 @@ class Game:
     room = None
     prompt = '> '
 
+    def __init__(self):
+        pass
+
     def get_input(self):
         """ Prompt user for actions """
         command = input(self.prompt)
