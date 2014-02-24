@@ -1,22 +1,17 @@
-from gazebo.game import Game
-from gazebo.room import Room
-
-def look(game, thing):
-    print("Hah! You can't see", thing)
-
-def quit(game, thing):
-    game.done = True
+from gazebo.game import Game, Room
+import gazebo.commands
 
 class mygame(Game):
     commands = {
-        'look' : look,
-        'quit' : quit,
-        'go' : Game.change_room,
-        'lel' : Game.unknown_command,
+        'look' : commands.look,
+        'quit' : commands.quit,
+        'go' : commands.change_room,
+        'lel' : commands.unknown_command,
     }
 
     rooms = {
         'butt' : Room(
+            "Your butt.",
             {
                 'north' : 'face',
                 'south' : 'ass',
@@ -24,6 +19,7 @@ class mygame(Game):
             {}
         ),
         'face' : Room(
+            "Your face.",
             {
                 'south' : 'butt',
                 'east' : 'ass',
@@ -31,6 +27,7 @@ class mygame(Game):
             {}
         ),
         'ass' : Room(
+            "Your anus.",
             {
                 'north' : 'butt',
                 'west' : 'face',

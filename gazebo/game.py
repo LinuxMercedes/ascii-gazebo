@@ -9,20 +9,6 @@ class Game:
   room = None
   prompt = '> '
 
-  def change_room(self, direction):
-    if self.room is None:
-      return "Oops, you're not on the map. You should get that checked out."
-
-    direction = direction[1:]
-    if direction in self.room.adjacent:
-      self.room = self.rooms[self.room.adjacent[direction]]
-      return None
-    else: 
-      return "Can't go that way."
-
-  def unknown_command(self, command):
-    return "Hey, " + command  + " isn't a command, jackass"
-
   def get_input(self):
     """ Prompt user for actions """
     command = input(self.prompt)
@@ -51,8 +37,27 @@ class Game:
 
 class Room:
   """ 
-  A Room. Tracks adjacent rooms and contents.
+  A Room. Tracks description, adjacent rooms, and contents.
   """
-  def __init__(self, nearby, items):
-    self.adjacent = nearby
+  def __init__(self, description, nearby, items):
+    self.description = description
+    self.nearby = nearby
+    self.items = items
+
+  def describe(self):
+    ret = [self.description]
+    if len(self.nearby):
+      ret.append(' Obvious exits are ')
+      for key in sorted(self.nearby.keys()):
+        ret.append(key)
+        ret.append(', ')
+      ret[-1] = '. '
+    if len(self.items):
+      ret.append(' There is a ')
+      for key in sorted(self.items.keys()):
+        ret.append(key)
+        ret.append(', ')
+      ret[-1] = '. '
+
+    return ''.join(ret)
 
