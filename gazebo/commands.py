@@ -1,5 +1,4 @@
 import pickle
-from copy import deepcopy
 
 def save(game, filename):
     if len(filename) <= 1:

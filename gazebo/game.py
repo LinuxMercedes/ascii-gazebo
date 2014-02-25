@@ -10,8 +10,11 @@ class Game:
     room = None
     prompt = '> '
     
-    def __init__(self):
-        pass
+    def __init__(self, player, commands, rooms, room):
+        self.player = player
+        self.commands = commands
+        self.rooms = rooms
+        self.room = room
 
     def get_input(self):
         """ Prompt user for actions """
@@ -87,16 +90,13 @@ class Player:
     A player
     """
 
-    inventory = {}
-
-    def __init__(self):
-        pass
+    def __init__(self, inventory = {}):
+        self.inventory = inventory
 
 class NPC:
     """
     An NPC or enemy
     """
-
     def __init__(self, name, description):
         self.name = name
         self.description = description
