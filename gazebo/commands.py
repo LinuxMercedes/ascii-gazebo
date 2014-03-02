@@ -69,6 +69,17 @@ def inventory(game, item):
         else:
             return "You haven't got any items."
 
+def say(game, thing): 
+    ret = []
+    for npc in game.room.npcs:
+        response, carry_on = npc.tell(thing)
+        if response:
+            ret.append(npc.name + ": " + response)
+            if not carry_on:
+                break
+
+    return ''.join(ret)
+
 def quit(game, thing):
     game.done = True
     return "Bye!"

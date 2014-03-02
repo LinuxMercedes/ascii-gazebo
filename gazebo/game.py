@@ -1,4 +1,5 @@
 from gazebo.commands import unknown_command
+import re
 
 class Game:
     """
@@ -28,19 +29,27 @@ class Game:
                 output = action(self, command[len(key):])
                 if output:
                     print(output)
+
+                # store the last command run and its inputs, perhaps for use in self.upate()
+                self.last_command = (action, key, command[len(key):])
                 return
 
         output = unknown_command(self, command)
         if output:
             print(output)
+        self.last_commnand = (unknown_command, '', command)
+
+    def start(self):
+        pass
 
     def update(self):
         pass
 
     def run(self):
+        self.start()
         while(not self.done):
             self.get_input()
-        self.update()
+            self.update()
 
 class Room:
     """ 
@@ -50,7 +59,8 @@ class Room:
         self.description = description
         self.nearby = nearby
         self.items = self._make_dict(items)
-        self.npcs = self._make_dict(npcs)
+        #self.npcs = self._make_dict(npcs)
+        self.npcs = npcs
 
     def _make_dict(self, things):
         d = {}
@@ -59,21 +69,30 @@ class Room:
         return d
 
     def describe(self):
-        ret = [self.description]
+        ret = ['You are in ', self.description]
 
         if len(self.nearby):
             ret.append(' Obvious exits are ')
-        for key in sorted(self.nearby.keys()):
-            ret.append(key)
-            ret.append(', ')
-        ret[-1] = '. '
+            for key in sorted(self.nearby.keys()):
+                ret.append(key)
+                ret.append(', ')
+            ret[-1] = '.'
 
         if len(self.items):
             ret.append(' There is a ')
-        for item in self.items.keys():
-            ret.append(item)
-            ret.append(', ')
-        ret[-1] = '. '
+            for item in self.items.keys():
+                ret.append(item)
+                ret.append(', ')
+            ret[-1] = '.'
+
+        if len(self.npcs):
+            ret.append("\n")
+            for npc in self.npcs:
+                ret.append(npc.name)
+                ret.append(', ')
+                ret.append(npc.description)
+                ret.append('; ')
+            ret[-1] = '.'
 
         return ''.join(ret)
 
@@ -97,7 +116,19 @@ class NPC:
     """
     An NPC or enemy
     """
-    def __init__(self, name, description):
+    def __init__(self, name, description, language):
         self.name = name
         self.description = description
+        self.language = []
+        # Compile regexes for language
+        for regex, response, carry_on in language:
+            self.language.append((re.compile(regex), response, carry_on))
+
+    def tell(self, thing):
+        for regex, response, carry_on in self.language:
+            match = regex.match(thing)
+            if match:
+                return (response % match.groups(), carry_on)
+
+        return (None, True)
 

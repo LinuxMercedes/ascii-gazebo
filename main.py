@@ -2,6 +2,9 @@ from gazebo.game import Game, Room, Item, Player, NPC
 import gazebo.commands as commands
 
 class mygame(Game):
+    def start(self):
+        print(commands.look(self, ''))
+
     def __init__(self):
         command_dict = {
             'look' : commands.look,
@@ -9,6 +12,7 @@ class mygame(Game):
             'go' : commands.change_room,
             'get' : commands.get,
             'inventory' : commands.inventory,
+            'say' : commands.say,
             'lel' : commands.unknown_command,
             'save' : commands.save,
             'load': commands.load,
@@ -33,7 +37,15 @@ class mygame(Game):
                     'east' : 'ass',
                 },
                 [],
-                []
+                [
+                    NPC(
+                        "Jeff", 
+                        "an asshole, is standing around", 
+                        [
+                            (r'\s*uhh\s*', 'shut uuuuuuup', False),
+                        ]
+                    ),
+                ]
             ),
             'ass' : Room(
                 "Your anus.",
