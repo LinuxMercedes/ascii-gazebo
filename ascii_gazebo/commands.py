@@ -22,8 +22,8 @@ def load(game, filename):
 def look(game, thing):
     if len(thing) > 1:
         thing = thing[1:]
-        if item in game.room.items:
-            return game.room.items[item].description
+        if thing in game.room.items:
+            return game.room.items[thing].description
         else:
             return "Can't look at " + thing
 
