@@ -1,5 +1,5 @@
-from gazebo.game import Game, Room, Item, Player, NPC
-import gazebo.commands as commands
+from ascii_gazebo.game import Game, Room, Item, Player, NPC
+import ascii_gazebo.commands as commands
 
 class mygame(Game):
     def start(self):

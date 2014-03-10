@@ -1,4 +1,4 @@
-from gazebo.commands import unknown_command
+from ascii_gazebo.commands import unknown_command
 import re
 
 class Game:
