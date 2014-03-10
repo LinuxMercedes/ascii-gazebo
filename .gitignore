@@ -1,5 +1,6 @@
 .*.sw?
-
+MANIFEST
+save.file
 
 *.py[cod]
 
